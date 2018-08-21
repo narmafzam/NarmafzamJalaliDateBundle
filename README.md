@@ -1,4 +1,4 @@
-Narmafzam/date-bundle
+narmafzam/jalali-date-picker-bundle
 ========================
 **A symfony 3 bundle to handle Jalali date including a date picker**
 
