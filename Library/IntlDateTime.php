@@ -11,7 +11,7 @@
  * @license     GNU General Public License 3.0 (http://www.gnu.org/licenses/gpl.html)
  */
 
-namespace Narmafzam\JalaliDatePickerBundle\Library;
+namespace Narmafzam\JalaliDateBundle\Library;
 
 class IntlDateTime extends \DateTime {
 

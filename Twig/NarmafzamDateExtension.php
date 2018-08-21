@@ -1,18 +1,18 @@
 <?php
 /**
- * This file is part of JalaliDatePickerBundle
+ * This file is part of JalaliDateBundle
  * Copyrighted by Narmafzam (Farzam Webnegar Sivan Co.), info@narmafzam.com
  * Created by peyman
  * Date: 8/21/18
  */
 
-namespace Narmafzam\JalaliDatePickerBundle\Twig;
+namespace Narmafzam\JalaliDateBundle\Twig;
 
-use Narmafzam\JalaliDatePickerBundle\Model\Converter\DateConverter;
+use Narmafzam\JalaliDateBundle\Model\Converter\DateConverter;
 
 /**
  * Class NarmafzamDateExtension
- * @package Narmafzam\JalaliDatePickerBundle\Twig
+ * @package Narmafzam\JalaliDateBundle\Twig
  */
 class NarmafzamDateExtension extends \Twig_Extension
 {

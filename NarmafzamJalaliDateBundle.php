@@ -1,15 +1,15 @@
 <?php
 /**
- * This file is part of JalaliDatePickerBundle
+ * This file is part of JalaliDateBundle
  * Copyrighted by Narmafzam (Farzam Webnegar Sivan Co.), info@narmafzam.com
  * Created by peyman
  * Date: 8/21/18
  */
 
-namespace Narmafzam\JalaliDatePickerBundle;
+namespace Narmafzam\JalaliDateBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class NarmafzamJalaliDatePickerBundle extends Bundle
+class NarmafzamJalaliDateBundle extends Bundle
 {
 }

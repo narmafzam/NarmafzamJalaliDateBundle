@@ -1,19 +1,19 @@
 <?php
 /**
- * This file is part of JalaliDatePickerBundle
+ * This file is part of JalaliDateBundle
  * Copyrighted by Narmafzam (Farzam Webnegar Sivan Co.), info@narmafzam.com
  * Created by peyman
  * Date: 08/21/2018
  */
 
-namespace Narmafzam\JalaliDatePickerBundle\Model\Converter;
+namespace Narmafzam\JalaliDateBundle\Model\Converter;
 
-use Narmafzam\JalaliDatePickerBundle\Library\IntlDateTime;
+use Narmafzam\JalaliDateBundle\Library\IntlDateTime;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class DateConverter
- * @package Narmafzam\JalaliDatePickerBundle\Model\Converter
+ * @package Narmafzam\JalaliDateBundle\Model\Converter
  */
 class DateConverter
 {

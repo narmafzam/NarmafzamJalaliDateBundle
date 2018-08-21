@@ -1,14 +1,14 @@
 <?php
 /**
- * This file is part of JalaliDatePickerBundle
+ * This file is part of JalaliDateBundle
  * Copyrighted by Narmafzam (Farzam Webnegar Sivan Co.), info@narmafzam.com
  * Created by peyman
  * Date: 8/21/18
  */
 
-namespace Narmafzam\JalaliDatePickerBundle\Form\DataTransformer;
+namespace Narmafzam\JalaliDateBundle\Form\DataTransformer;
 
-use Narmafzam\JalaliDatePickerBundle\Model\Converter\DateConverter;
+use Narmafzam\JalaliDateBundle\Model\Converter\DateConverter;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;

@@ -1,4 +1,4 @@
-narmafzam/jalali-date-picker-bundle
+narmafzam/jalali-date-bundle
 ========================
 **A symfony 3 bundle to handle Jalali date including a date picker**
 
@@ -7,7 +7,7 @@ Install
 - **Install via Composer:**
 
 ```
-$ php composer require narmafzam/jalali-date-picker-bundle
+$ php composer require narmafzam/jalali-date-bundle
 ```
 
 - **Add to AppKernel:**
@@ -18,7 +18,7 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles = array(
-            new Narmafzam\JalaliDatePickerBundle\NarmafzamJalaliDatePickerBundle(),
+            new Narmafzam\JalaliDateBundle\NarmafzamJalaliDateBundle(),
     }
 }
 ```
@@ -102,7 +102,7 @@ Form
 **Sample:**
 ```php
 $builder
-    ->add('date', NarmafzamDateType::class, [
+    ->add('date', NarmafzamJalaliDateType::class, [
         'serverFormat' => 'yyyy/MM/dd',
         'pickerOptions' => [
             'Format' => 'yyyy/MM/dd',
@@ -112,7 +112,7 @@ $builder
             'DisableBeforeToday' => true,
         ]
     ])
-    ->add('date2', NarmafzamDateType::class, [
+    ->add('date2', NarmafzamJalaliDateType::class, [
         'serverFormat' => 'yyyy-MM-dd E',
         'pickerOptions' => [
             'Format' => 'yyyy/MM/dd',
@@ -135,26 +135,25 @@ Date Picker
 ```html
 <head>
     ...
-    <link rel="stylesheet" href="{{ asset('bundles/narmafzamdate/MdBootstrapPersianDateTimePicker/css/jquery.Bootstrap-PersianDateTimePicker.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/narmafzam/jalali-date/MdBootstrapPersianDateTimePicker/css/jquery.Bootstrap-PersianDateTimePicker.css') }}" />
     ...
 </head>
 ```
 
 **Add this lines to end of body tag in `base.html.twig` file:**
 ```html
-<script type="text/javascript" src="{{ asset('bundles/narmafzamdate/MdBootstrapPersianDateTimePicker/js/jalaali.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/narmafzamdate/MdBootstrapPersianDateTimePicker/js/jquery.Bootstrap-PersianDateTimePicker.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/narmafzam/jalali-date/MdBootstrapPersianDateTimePicker/js/jalaali.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/narmafzam/jalali-date/MdBootstrapPersianDateTimePicker/js/jquery.Bootstrap-PersianDateTimePicker.js') }}"></script>
 ```
 
 **Add this lines to `app/config.yml` file:**
 ```yaml
 twig:
     form_themes:
-        - 'NarmafzamDateBundle:Form:form_s_date.html.twig'
+        - 'NarmafzamJalaliDateBundle:Form:form_s_date.html.twig'
 ```
 
 **References:**
-* [Blog of Ali Farhadi](http://farhadi.ir/blog/1389/02/10/persian-calendar-for-php-53/)
 * [View Intl Format](http://userguide.icu-project.org/formatparse/datetime)
 * [Class Intldateformatter](http://php.net/manual/en/class.intldateformatter.php)
 * [MD.BootstrapPersianDateTimePicker](https://github.com/Mds92/MD.BootstrapPersianDateTimePicker)

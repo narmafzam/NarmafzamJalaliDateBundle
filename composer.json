@@ -1,5 +1,5 @@
 {
-  "name" : "narmafzam/jalali-date-picker-bundle",
+  "name" : "narmafzam/jalali-date-bundle",
   "type" : "symfony-bundle",
   "description" : "A symfony 3 bundle to handle Jalali date including a date picker",
   "keywords" : ["Symfony jalali shamsi khorshidi persian date picker bundle"],
@@ -16,7 +16,7 @@
   },
   "autoload" : {
     "psr-4": {
-      "Narmafzam\\JalaliDatePickerBundle\\" : ""
+      "Narmafzam\\JalaliDateBundle\\" : ""
     }
   },
   "minimum-stability": "dev"

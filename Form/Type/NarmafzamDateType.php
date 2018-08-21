@@ -1,15 +1,15 @@
 <?php
 /**
- * This file is part of JalaliDatePickerBundle
+ * This file is part of JalaliDateBundle
  * Copyrighted by Narmafzam (Farzam Webnegar Sivan Co.), info@narmafzam.com
  * Created by peyman
  * Date: 8/21/18
  */
 
-namespace Narmafzam\JalaliDatePickerBundle\Form\Type;
+namespace Narmafzam\JalaliDateBundle\Form\Type;
 
-use Narmafzam\JalaliDatePickerBundle\Form\DataTransformer\NarmafzamDateTransformer;
-use Narmafzam\JalaliDatePickerBundle\Model\Converter\DateConverter;
+use Narmafzam\JalaliDateBundle\Form\DataTransformer\NarmafzamDateTransformer;
+use Narmafzam\JalaliDateBundle\Model\Converter\DateConverter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,10 +19,10 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class NarmafzamDateType
- * @package Narmafzam\JalaliDatePickerBundle\Form\Type
+ * Class NarmafzamJalaliDateType
+ * @package Narmafzam\JalaliDateBundle\Form\Type
  */
-class NarmafzamDateType extends AbstractType
+class NarmafzamJalaliDateType extends AbstractType
 {
     /**
      * @var DateConverter
