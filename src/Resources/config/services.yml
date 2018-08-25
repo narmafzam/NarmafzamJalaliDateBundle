@@ -1,0 +1,17 @@
+services:
+    Narmafzam\JalaliDateBundle\Model\Converter\DateConverter:
+        arguments:
+            - '@request_stack'
+
+    Narmafzam\JalaliDateBundle\Twig\NarmafzamDateExtension:
+        arguments:
+            - '@Narmafzam\JalaliDateBundle\Model\Converter\DateConverter'
+        tags:
+            - { name: twig.extension }
+
+    Narmafzam\JalaliDateBundle\Form\Type\NarmafzamDateType:
+        arguments:
+            - '@Narmafzam\JalaliDateBundle\Model\Converter\DateConverter'
+            - '@request_stack'
+        tags:
+            - { name: form.type, alias: jSDate }
