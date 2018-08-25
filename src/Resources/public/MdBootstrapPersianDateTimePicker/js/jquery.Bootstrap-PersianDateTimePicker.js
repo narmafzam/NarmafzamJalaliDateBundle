@@ -1,6 +1,6 @@
 ﻿/*
  * bootstrap persian date time picker jQuery Plugin
- * version : 2.3.1.0
+ * version : 2.2.0.0
  * https://github.com/Mds92/MD.BootstrapPersianDateTimePicker
  *
  *
@@ -8,7 +8,7 @@
  * mds.soft@gmail.com - @mdssoft
  *
  * My weblog: mds-soft.persianblog.ir
- */
+*/
 
 (function ($) {
 
@@ -58,7 +58,6 @@
         return "";
     }
   }
-
   function getPersianWeekDayNameWithEnglishIndex(englishWeekDayIndex) {
     switch (englishWeekDayIndex) {
       case 0:
@@ -79,7 +78,6 @@
         return "";
     }
   }
-
   function getPersianWeekDayNameWithPersianIndex(persianWeekDayIndex) {
     switch (persianWeekDayIndex) {
       case 0:
@@ -136,11 +134,9 @@
     }
     return dayOfWeek;
   }
-
   function getFirstDayOfGregorianWeek(year, month) {
     return new Date(year, month, 1).getDay();
   }
-
   function getTodayCalendarInPersian() {
     var today = new Date(),
       persianDate = toJalaali(today.getFullYear(), today.getMonth() + 1, today.getDate());
@@ -182,11 +178,9 @@
     var len = (String(base).length - String(nr).length) + 1;
     return len > 0 ? new Array(len).join('0') + nr : nr;
   }
-
   function isNumber(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
-
   function toPersianNumber(inputNumber1) {
     /* ۰ ۱ ۲ ۳ ۴ ۵ ۶ ۷ ۸ ۹ */
     if (inputNumber1 == undefined) return '';
@@ -204,7 +198,6 @@
     str1 = str1.replace(/9/img, '۹');
     return str1;
   }
-
   function toEnglishNumber(inputNumber2) {
     if (inputNumber2 == undefined) return '';
     var str = inputNumber2.toString().trim();
@@ -221,7 +214,6 @@
     str = str.replace(/۹/img, '9');
     return str;
   }
-
   function getPersianMonth(monthNumber) {
     switch (monthNumber) {
       case 1:
@@ -252,7 +244,6 @@
         return "";
     }
   }
-
   function getGregorianMonth(monthNumber) {
     switch (monthNumber) {
       case 0:
@@ -298,7 +289,6 @@
       }
     }
   }
-
   function increaseOneYear(dateObject, isGregorian) {
     if (isGregorian) {
       var date = new Date(dateObject.Year, dateObject.Month, dateObject.Day);
@@ -308,7 +298,6 @@
       dateObject.Year = dateObject.Year + 1;
     }
   }
-
   function decreaseOneMonth(dateObject, isGregorian) {
     if (isGregorian) {
       var date = new Date(dateObject.Year, dateObject.Month, dateObject.Day);
@@ -323,7 +312,6 @@
       }
     }
   }
-
   function decreaseOneYear(dateObject, isGregorian) {
     if (isGregorian) {
       var date = new Date(dateObject.Year, dateObject.Month, dateObject.Day);
@@ -356,6 +344,7 @@
 
   }
 
+
   function getShortHour(hour) {
     var shortHour;
     if (hour > 12)
@@ -364,7 +353,6 @@
       shortHour = hour;
     return shortHour;
   }
-
   function getAmPm(hour, isGregorian) {
     var amPm;
     if (hour > 12) {
@@ -372,14 +360,14 @@
         amPm = 'PM';
       else
         amPm = 'ب.ظ';
-    } else
-    if (isGregorian)
-      amPm = 'AM';
+    }
     else
-      amPm = 'ق.ظ';
+      if (isGregorian)
+        amPm = 'AM';
+      else
+        amPm = 'ق.ظ';
     return amPm;
   }
-
   function getDefaultFormat(enableTimePicker) {
     var defaultFormat = 'yyyy/MM/dd';
     if (enableTimePicker)
@@ -388,9 +376,9 @@
   }
 
   function getDateTimeString(dateTimeInJsonFormat, format, isEnglishNumber, isGregorian) {
-    var gregorian = isGregorian ?
-      new Date(dateTimeInJsonFormat.Year, dateTimeInJsonFormat.Month, dateTimeInJsonFormat.Day, dateTimeInJsonFormat.Hour, dateTimeInJsonFormat.Minute, dateTimeInJsonFormat.Second) :
-      toGregorian(dateTimeInJsonFormat.Year, dateTimeInJsonFormat.Month, dateTimeInJsonFormat.Day),
+    var gregorian = isGregorian
+      ? new Date(dateTimeInJsonFormat.Year, dateTimeInJsonFormat.Month, dateTimeInJsonFormat.Day, dateTimeInJsonFormat.Hour, dateTimeInJsonFormat.Minute, dateTimeInJsonFormat.Second)
+      : toGregorian(dateTimeInJsonFormat.Year, dateTimeInJsonFormat.Month, dateTimeInJsonFormat.Day),
       miladiDate = isGregorian ? gregorian : new Date(gregorian.gy, gregorian.gm - 1, gregorian.gd, dateTimeInJsonFormat.Hour, dateTimeInJsonFormat.Minute, dateTimeInJsonFormat.Second),
       selectedDateTimeString = format;
 
@@ -465,12 +453,11 @@
 
     return selectedDateTimeString;
   }
-
   function setTargetValue($popoverDescriber, dateTimeInJsonFormat, isGregorian) {
     var targetSelector = $popoverDescriber.attr('data-targetselector'),
       $target = $(targetSelector),
       format = $popoverDescriber.attr('data-mdformat'),
-      englishNumber = isGregorian || $popoverDescriber.attr('data-englishnumber') == 'true',
+      englishNumber = $popoverDescriber.attr('data-englishnumber') == 'true',
       value = getDateTimeString(dateTimeInJsonFormat, format, englishNumber, isGregorian);
     if ($target.is('input'))
       $target.val(value);
@@ -479,33 +466,12 @@
     $popoverDescriber.attr(mdSelectedDateTimeAttributeName, JSON.stringify(dateTimeInJsonFormat));
     $target.trigger('change');
   }
-
-  function setTargetValue1($target, value, senderObject) {
-    if ($target.is('input')) {
+  function setTargetValue1($target, value) {
+    if ($target.is('input'))
       $target.val(value);
-      var $senderObject = $(senderObject);
-      if ($senderObject.attr('data-inline') == 'true') {
-        var isGregorian = $senderObject.attr('data-isgregorian') == 'true',
-          dateTimeInJsonFormat = {};
-        if (isGregorian) {
-          var dateTime = parseGregorianDateTime(value);
-          dateTimeInJsonFormat.Year = dateTime.getFullYear();
-          dateTimeInJsonFormat.Month = dateTime.getMonth();
-          dateTimeInJsonFormat.Day = dateTime.getDate();
-          dateTimeInJsonFormat.Hour = dateTime.getHours();
-          dateTimeInJsonFormat.Minute = dateTime.getMinutes();
-          dateTimeInJsonFormat.Second = dateTime.getSeconds();
-        } else
-          dateTimeInJsonFormat = parsePersianDateTime(value);
-        updateDateTimePickerHtml($senderObject.find('thead'), changeDateTimeEnum.OnEvent, isGregorian,
-          dateTimeInJsonFormat.Month,
-          dateTimeInJsonFormat.Year,
-          dateTimeInJsonFormat.Day);
-      }
-    } else
+    else
       $target.html(value);
   }
-
   function getTargetValue($popoverDescriber) {
     var targetSelector = $popoverDescriber.attr('data-targetselector'),
       $target = $(targetSelector),
@@ -516,7 +482,6 @@
       value = $target.text().trim();
     return toEnglishNumber(value);
   }
-
   function getTargetDate($target, isGregorian) {
     var targetValue = toEnglishNumber(getTargetValue1($target));
     if (targetValue == '') return undefined;
@@ -526,7 +491,6 @@
       gregorianJson = toGregorian(dateTimeInJsonFormat.Year, dateTimeInJsonFormat.Month, dateTimeInJsonFormat.Day);
     return new Date(gregorianJson.gy, gregorianJson.gm - 1, gregorianJson.gd, dateTimeInJsonFormat.Hour, dateTimeInJsonFormat.Minute, dateTimeInJsonFormat.Second);
   }
-
   function getTargetValue1($target) {
     var targetValue;
     if ($target.is('input'))
@@ -541,14 +505,7 @@
     if (!isNumber(hour)) hour = 0;
     if (!isNumber(minute)) minute = 0;
     if (!isNumber(second)) second = 0;
-    return {
-      Year: year,
-      Month: month,
-      Day: day,
-      Hour: hour,
-      Minute: minute,
-      Second: second
-    };
+    return { Year: year, Month: month, Day: day, Hour: hour, Minute: minute, Second: second };
   }
 
   // تبدیل تاریخ به عدد برای مقایسه
@@ -627,7 +584,8 @@
 
       // بدست آوردن سال
       year = (persianDateTimeInString.match(/-\d{2,4}(?=-\d{1,2}[^:])/img)[0]).replace(/\D+/, '');
-    } else {
+    }
+    else {
       for (var i = 1; i < 12; i++) {
         var persianMonthName = getPersianMonth(i);
         if (!persianDateTimeInString.indexOf(persianMonthName) > -1) continue;
@@ -682,7 +640,6 @@
 
     return createDateTimeJson(numericYear, numericMonth, numericDay, numericHour, numericMinute, numericSecond, numericMiliSecond);
   }
-
   function parsePersianFromDateToDateValues(fromDateString, toDateString) {
     if ((toDateString == undefined || toDateString == '') &&
       (fromDateString == undefined || fromDateString == '')) return undefined;
@@ -700,7 +657,6 @@
 
   function parseGregorianDateTime(gregorianDateTimeString) {
     //بدست آوردن تاریخ قبلی که در تکست باکس وجود داشته
-    gregorianDateTimeString = toEnglishNumber(gregorianDateTimeString);
     if (gregorianDateTimeString.trim() == '') {
       var dateTime = new Date();
       dateTime.setHours(0);
@@ -751,7 +707,8 @@
         } catch (e) {
           dateTimeInJsonFormat = parsePersianDateTime(getTargetValue($popoverDescriber));
         }
-      } else
+      }
+      else
         dateTimeInJsonFormat = parsePersianDateTime(getTargetValue($popoverDescriber));
     }
 
@@ -819,7 +776,8 @@
           toDateTargetSelector = $toDatePopoverDescriber.attr('data-targetselector'),
           $toDateTarget = toDateTargetSelector != undefined && toDateTargetSelector != '' ? $(toDateTargetSelector) : $toDatePopoverDescriber;
         toDateString = $toDateTarget.val();
-      } else if (isToDate != undefined && isToDate == 'true') { // $popoverDescriber is `to date`, so we have to find `from date`
+      }
+      else if (isToDate != undefined && isToDate == 'true') {  // $popoverDescriber is `to date`, so we have to find `from date`
         toDateString = dateTimeInJsonFormat.Year.toString() + '/' + dateTimeInJsonFormat.Month.toString() + '/' + dateTimeInJsonFormat.Day.toString();
         var $fromDatePopoverDescriber = $('[data-groupid="' + groupId + '"][data-fromdate]'),
           fromDateTargetSelector = $fromDatePopoverDescriber.attr('data-targetselector'),
@@ -954,8 +912,8 @@
 
       // دکمه های سال بعد و ماه بعد
 
-      if (isFromDate && fromDateToDateJson.ToDateObject.Year == fromDateToDateJson.FromDateObject.Year &&
-        fromDateToDateJson.ToDateObject.Month <= fromDateToDateJson.FromDateObject.Month) {
+      if (isFromDate && fromDateToDateJson.ToDateObject.Year == fromDateToDateJson.FromDateObject.Year
+        && fromDateToDateJson.ToDateObject.Month <= fromDateToDateJson.FromDateObject.Month) {
         $nextMonthButton.addClass('disabled').attr('disabled', 'disabled');
         $nextYearButton.addClass('disabled').attr('disabled', 'disabled');
       }
@@ -969,12 +927,12 @@
         var $thisA = $(this),
           month = Number($thisA.attr('data-monthnumber')),
           $li = $thisA.parents('li:first');
-        if (isToDate && fromDateToDateJson.FromDateObject.Year == fromDateToDateJson.ToDateObject.Year &&
-          fromDateToDateJson.FromDateObject.Month > month) {
+        if (isToDate && fromDateToDateJson.FromDateObject.Year == fromDateToDateJson.ToDateObject.Year
+          && fromDateToDateJson.FromDateObject.Month > month) {
           $li.addClass('disabled').children('a').attr('disabled', 'disabled');
         }
-        if (isFromDate && fromDateToDateJson.FromDateObject.Year == fromDateToDateJson.ToDateObject.Year &&
-          fromDateToDateJson.ToDateObject.Month < month) {
+        if (isFromDate && fromDateToDateJson.FromDateObject.Year == fromDateToDateJson.ToDateObject.Year
+          && fromDateToDateJson.ToDateObject.Month < month) {
           $li.addClass('disabled').children('a').attr('disabled', 'disabled');
         }
       });
@@ -1001,7 +959,8 @@
           $calendarMainTableBody.append($tr);
           isTrAppended = true;
           $tr = $('<tr />');
-        } else if (!isTrAppended) {
+        }
+        else if (!isTrAppended) {
           $calendarMainTableBody.append($tr);
           isTrAppended = true;
         }
@@ -1024,7 +983,7 @@
       if (fromDateToDateJson != undefined) {
         var selectedDateNumber = convertToNumber(dateTimeInJsonFormat.Year, dateTimeInJsonFormat.Month, dateTimeInJsonFormat.Day); // تاریخ انتخاب شده فعلی
         if (!((isToDate && fromDateToDateJson.FromDateNumber != undefined && selectedDateNumber < fromDateToDateJson.FromDateNumber) ||
-            (isFromDate && fromDateToDateJson.ToDateNumber != undefined && selectedDateNumber > fromDateToDateJson.ToDateNumber))) {
+          (isFromDate && fromDateToDateJson.ToDateNumber != undefined && selectedDateNumber > fromDateToDateJson.ToDateNumber))) {
           setTargetValue($popoverDescriber, dateTimeInJsonFormat);
         }
       } else {
@@ -1036,7 +995,6 @@
 
     return $calendarDivWrapper;
   }
-
   function createGregorianDateTimePickerHtml($popoverDescriber, dateTimeInJsonFormat, writeDateString, initializing) {
     var triggerName = $popoverDescriber.attr('data-trigger'),
       gregorianDateTime = new Date(),
@@ -1046,7 +1004,7 @@
       todayDateTimeString = 'Today; ' + todayGregorianDateTime.toDateString(),
       $calendarMainTable = $('<table class="table table-striped" />'),
       $calendarMainTableBody = $('<tbody />'),
-      $calendarHeader = $('<thead><tr><td colspan="100" style="padding:5px;"><table class="table" data-name="md-persiandatetimepicker-headertable"><tr><td><button type="button" class="btn btn-default btn-xs" title="Next Year" data-name="md-persiandatetimepicker-nextyear">&lt;&lt;</button></td><td><button type="button" class="btn btn-default btn-xs" title="Next Month" data-name="md-persiandatetimepicker-nextmonth">&lt;</button></td><td><div class="dropdown" style="min-width:50px;"><button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuPersianYear" data-toggle="dropdown" aria-expanded="true" data-name="md-persiandatetimepicker-titleyear">2016</button><ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuPersianYear"><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-yearnumber">2016</a></li></ul></div></td><td><div class="dropdown" style="min-width:73px;"><button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuPersianMonths" data-toggle="dropdown" aria-expanded="true" data-name="md-persiandatetimepicker-titlemonth">Month</button><ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuPersianMonths"><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="0">January</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="1">February</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="2">March</a></li><li role="presentation" class="divider"></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="3">April</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="4">May</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="5">June</a></li><li role="presentation" class="divider"></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="6">July</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="7">August</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="8">September</a></li><li role="presentation" class="divider"></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="9">October</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="10">November</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="11">December</a></li></ul></div></td><td><button type="button" class="btn btn-default btn-xs" title="Previous Month" data-name="md-persiandatetimepicker-previousmonth">&gt;</button></td><td><button type="button" class="btn btn-default btn-xs" title="Previous Year" data-name="md-persiandatetimepicker-previousyear">&gt;&gt;</button></td></tr></table></td></tr><tr data-name="md-persiandatetimepicker-weekdaysnames"><td>Su</td><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td class="text-danger">Fr</td><td>Sa</td></tr></thead>'),
+      $calendarHeader = $('<thead><tr><td colspan="100" style="padding:5px;"><table class="table" data-name="md-persiandatetimepicker-headertable"><tr><td><button type="button" class="btn btn-default btn-xs" title="تقویم شمسی" data-name="md-persiandatetimepicker-switch">&#8652</button></td><td><button type="button" class="btn btn-default btn-xs" title="Next Year" data-name="md-persiandatetimepicker-nextyear">&lt;&lt;</button></td><td><button type="button" class="btn btn-default btn-xs" title="Next Month" data-name="md-persiandatetimepicker-nextmonth">&lt;</button></td><td><div class="dropdown" style="min-width:50px;"><button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuPersianYear" data-toggle="dropdown" aria-expanded="true" data-name="md-persiandatetimepicker-titleyear">2016</button><ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuPersianYear"><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-yearnumber">2016</a></li></ul></div></td><td><div class="dropdown" style="min-width:73px;"><button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuPersianMonths" data-toggle="dropdown" aria-expanded="true" data-name="md-persiandatetimepicker-titlemonth">Month</button><ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuPersianMonths"><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="0">January</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="1">February</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="2">March</a></li><li role="presentation" class="divider"></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="3">April</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="4">May</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="5">June</a></li><li role="presentation" class="divider"></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="6">July</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="7">August</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="8">September</a></li><li role="presentation" class="divider"></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="9">October</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="10">November</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" data-name="md-persiandatetimepicker-monthname" data-monthnumber="11">December</a></li></ul></div></td><td><button type="button" class="btn btn-default btn-xs" title="Previous Month" data-name="md-persiandatetimepicker-previousmonth">&gt;</button></td><td><button type="button" class="btn btn-default btn-xs" title="Previous Year" data-name="md-persiandatetimepicker-previousyear">&gt;&gt;</button></td></tr></table></td></tr><tr data-name="md-persiandatetimepicker-weekdaysnames"><td>Su</td><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td class="text-danger">Fr</td><td>Sa</td></tr></thead>'),
       $monthsTitlesDropDown = $calendarHeader.find('.dropdown-menu[aria-labelledby="dropdownMenuPersianMonths"]'),
       $calendarTimePicker = $('<tr><td colspan="100" style="padding: 2px;"><table class="table" data-name="md-persiandatetimepicker-timepicker"><tr><td><input type="number" class="form-control" data-name="clock-hour" min="0" max="23" /></td><td>:</td><td><input type="number" class="form-control" data-name="clock-minute" min="0" max="59" /></td><td>:</td><td><input type="number" class="form-control" data-name="clock-second" min="0" max="59" /></td></tr></table></td></tr>'),
       $calendarFooter = $('<tfoot><tr><td colspan="100"><a class="" href="javascript:void(0);" data-name="go-today">' + todayDateTimeString + '</a></td></tr></tfoot>'),
@@ -1069,14 +1027,15 @@
       if (selectedDateTimeValue != undefined && selectedDateTimeValue.trim() != '') {
         try {
           dateTimeInJsonFormat = JSON.parse(selectedDateTimeValue);
-        } catch (e) {}
+        } catch (e) { }
       } else {
         gregorianDateTime = parseGregorianDateTime(getTargetValue($popoverDescriber));
         dateTimeInJsonFormat = createDateTimeJson(gregorianDateTime.getFullYear(), gregorianDateTime.getMonth(),
           gregorianDateTime.getDate(), gregorianDateTime.getHours(), gregorianDateTime.getMinutes(),
           gregorianDateTime.getSeconds());
       }
-    } else
+    }
+    else
       gregorianDateTime = new Date(dateTimeInJsonFormat.Year, dateTimeInJsonFormat.Month, dateTimeInJsonFormat.Day, dateTimeInJsonFormat.Hour, dateTimeInJsonFormat.Minute, dateTimeInJsonFormat.Second);
 
     // افزودن دراپ داون سال
@@ -1123,7 +1082,8 @@
         toDateTime = toDateTargetValue == '' ? undefined : parseGregorianDateTime(toDateTargetValue);
         fromDateToDateJson.ToDateObject = toDateTime;
         fromDateToDateJson.FromDateObject = gregorianDateTime;
-      } else if (isToDate != undefined && isToDate == 'true') { // $popoverDescriber is `to date`, so we have to find `from date`
+      }
+      else if (isToDate != undefined && isToDate == 'true') {  // $popoverDescriber is `to date`, so we have to find `from date`
         var $fromDatePopoverDescriber = $('[data-groupid="' + groupId + '"][data-fromdate]'),
           fromDateTargetValue = getTargetValue($fromDatePopoverDescriber);
         fromDateTime = fromDateTargetValue == '' ? undefined : parseGregorianDateTime(fromDateTargetValue);
@@ -1247,8 +1207,8 @@
 
       // دکمه های سال بعد و ماه بعد
 
-      if (isFromDate != undefined && isFromDate == 'true' && fromDateToDateJson.ToDateObject.getFullYear() == fromDateToDateJson.FromDateObject.getFullYear() &&
-        fromDateToDateJson.ToDateObject.getMonth() <= fromDateToDateJson.FromDateObject.getMonth()) {
+      if (isFromDate != undefined && isFromDate == 'true' && fromDateToDateJson.ToDateObject.getFullYear() == fromDateToDateJson.FromDateObject.getFullYear()
+        && fromDateToDateJson.ToDateObject.getMonth() <= fromDateToDateJson.FromDateObject.getMonth()) {
         $nextMonthButton.addClass('disabled').attr('disabled', 'disabled');
         $nextYearButton.addClass('disabled').attr('disabled', 'disabled');
       }
@@ -1262,12 +1222,12 @@
         var $thisA = $(this),
           month = Number($thisA.attr('data-monthnumber')),
           $li = $thisA.parents('li:first');
-        if (isToDate && fromDateToDateJson.FromDateObject.getFullYear() == fromDateToDateJson.ToDateObject.getFullYear() &&
-          fromDateToDateJson.FromDateObject.getMonth() > month) {
+        if (isToDate && fromDateToDateJson.FromDateObject.getFullYear() == fromDateToDateJson.ToDateObject.getFullYear()
+          && fromDateToDateJson.FromDateObject.getMonth() > month) {
           $li.addClass('disabled').children('a').attr('disabled', 'disabled');
         }
-        if (isFromDate && fromDateToDateJson.FromDateObject.getFullYear() == fromDateToDateJson.ToDateObject.getFullYear() &&
-          fromDateToDateJson.ToDateObject.getMonth() < month) {
+        if (isFromDate && fromDateToDateJson.FromDateObject.getFullYear() == fromDateToDateJson.ToDateObject.getFullYear()
+          && fromDateToDateJson.ToDateObject.getMonth() < month) {
           $li.addClass('disabled').children('a').attr('disabled', 'disabled');
         }
       });
@@ -1294,7 +1254,8 @@
           $calendarMainTableBody.append($tr);
           isTrAppended = true;
           $tr = $('<tr />');
-        } else if (!isTrAppended) {
+        }
+        else if (!isTrAppended) {
           $calendarMainTableBody.append($tr);
           isTrAppended = true;
         }
@@ -1319,7 +1280,7 @@
       if (fromDateToDateJson != undefined) {
         var selectedDateNumber = convertToNumber(dateTimeInJsonFormat.Year, dateTimeInJsonFormat.Month, dateTimeInJsonFormat.Day); // تاریخ انتخاب شده فعلی
         if (!((isToDate && fromDateToDateJson.FromDateNumber != undefined && selectedDateNumber < fromDateToDateJson.FromDateNumber) ||
-            (isFromDate && fromDateToDateJson.ToDateNumber != undefined && selectedDateNumber > fromDateToDateJson.ToDateNumber))) {
+          (isFromDate && fromDateToDateJson.ToDateNumber != undefined && selectedDateNumber > fromDateToDateJson.ToDateNumber))) {
           setTargetValue($popoverDescriber, dateTimeInJsonFormat, true);
         }
       } else {
@@ -1361,24 +1322,17 @@
   };
 
   var isGregorianState = false;
-
-  function updateDateTimePickerHtml(senderObject, changeEnum, isGregorian, newMonthNumber, newYearNumber, newDayNumber) {
+  function updateDateTimePickerHtml(senderObject, changeEnum, isGregorian, newMonthNumber, newYearNumber) {
     isGregorianState = (isGregorian == undefined || isGregorian == isGregorianState) ? isGregorianState : isGregorian;
     var $senderObject = $(senderObject),
-      $mainBlock = $senderObject.parents('[data-mddatetimepicker="true"]:first'),
-      inLine = $mainBlock.attr('data-inline') == 'true',
       $wrapper = $senderObject.parents(mdDateTimePickerWrapperSelector),
       $popoverDescriber = $wrapper.length > 0 ? $('[aria-describedby*="' + $wrapper.parents('.popover').attr('id') + '"]') : undefined,
-      newDateTimeInJsonFormat = !inLine && $popoverDescriber != undefined && $popoverDescriber.length > 0 && $popoverDescriber.attr(mdSelectedDateTimeAttributeName) != undefined && $popoverDescriber.attr(mdSelectedDateTimeAttributeName) != '' ?
-      JSON.parse($popoverDescriber.attr(mdSelectedDateTimeAttributeName)) :
-      undefined,
+      newDateTimeInJsonFormat = $popoverDescriber != undefined && $popoverDescriber.attr(mdSelectedDateTimeAttributeName) != undefined && $popoverDescriber.attr(mdSelectedDateTimeAttributeName) != ''
+        ? JSON.parse($popoverDescriber.attr(mdSelectedDateTimeAttributeName))
+        : undefined,
       writeDateString = true;
 
-    if (inLine) {
-      $popoverDescriber = $mainBlock;
-      newDateTimeInJsonFormat = JSON.parse($mainBlock.attr(mdSelectedDateTimeAttributeName));
-      isGregorianState = $popoverDescriber.attr('data-isgregorian') == 'true';
-    } else if (isGregorianState == undefined && $popoverDescriber != undefined && $popoverDescriber.length > 0)
+    if (isGregorianState == undefined && $popoverDescriber != undefined)
       isGregorianState = $popoverDescriber.attr('data-isgregorian') == 'true';
 
     switch (changeEnum) {
@@ -1387,22 +1341,22 @@
         increaseOneMonth(newDateTimeInJsonFormat, isGregorianState);
         break;
 
-        // ماه قبلی
+      // ماه قبلی
       case changeDateTimeEnum.DecreaseMonth:
         decreaseOneMonth(newDateTimeInJsonFormat, isGregorianState);
         break;
 
-        // سال بعدی
+      // سال بعدی
       case changeDateTimeEnum.IncreaseYear:
         increaseOneYear(newDateTimeInJsonFormat, isGregorianState);
         break;
 
-        // سال قبلی
+      // سال قبلی
       case changeDateTimeEnum.DecreaseYear:
         decreaseOneYear(newDateTimeInJsonFormat, isGregorianState);
         break;
 
-        // برو به امروز
+      // برو به امروز
       case changeDateTimeEnum.GoToday:
         var todayDateTime = isGregorianState ? new Date() : parsePersianDateTime('');
         newDateTimeInJsonFormat.Year = isGregorianState ? todayDateTime.getFullYear() : todayDateTime.Year;
@@ -1410,7 +1364,7 @@
         newDateTimeInJsonFormat.Day = isGregorianState ? todayDateTime.getDate() : todayDateTime.Day;
         break;
 
-        // تغییر در ساعت
+      // تغییر در ساعت
       case changeDateTimeEnum.ClockChanged:
         newDateTimeInJsonFormat.Hour = $wrapper.find('input[data-name="clock-hour"]').val();
         newDateTimeInJsonFormat.Minute = $wrapper.find('input[data-name="clock-minute"]').val();
@@ -1424,15 +1378,15 @@
         setTargetValue($popoverDescriber, newDateTimeInJsonFormat, isGregorianState);
         return;
 
-        // تغییر روز
+      // تغییر روز
       case changeDateTimeEnum.DayChanged:
         newDateTimeInJsonFormat.Day = Number(toEnglishNumber($senderObject.text().trim()));
         hidePopover($popoverDescriber);
         break;
 
-        // هنگامی که رویداد 
-        // trigger
-        // رخ می دهد
+      // هنگامی که رویداد 
+      // trigger
+      // رخ می دهد
       case changeDateTimeEnum.TriggerFired:
         writeDateString = false;
         $popoverDescriber = $senderObject;
@@ -1449,16 +1403,14 @@
         $wrapper = $popover.find(mdDateTimePickerWrapperSelector);
         break;
 
-        // تغییر ماه و سال و روز
+      // تغییر ماه و سال
       case changeDateTimeEnum.OnEvent:
         if (newMonthNumber != undefined)
           newDateTimeInJsonFormat.Month = newMonthNumber;
         if (newYearNumber != undefined)
           newDateTimeInJsonFormat.Year = newYearNumber;
-        if (newDayNumber != undefined)
-          newDateTimeInJsonFormat.Day = newDayNumber;
         break;
-        //تغییر تقویم
+      //تغییر تقویم
       case changeDateTimeEnum.Switch:
         isGregorianState = !isGregorianState;
         $popoverDescriber.attr('data-isgregorian', isGregorianState);
@@ -1466,9 +1418,9 @@
         break;
     }
 
-    $wrapper.replaceWith(isGregorianState ?
-      createGregorianDateTimePickerHtml($popoverDescriber, newDateTimeInJsonFormat, writeDateString) :
-      createPersianDateTimePickerHtml($popoverDescriber, newDateTimeInJsonFormat, writeDateString));
+    $wrapper.replaceWith(isGregorianState
+      ? createGregorianDateTimePickerHtml($popoverDescriber, newDateTimeInJsonFormat, writeDateString)
+      : createPersianDateTimePickerHtml($popoverDescriber, newDateTimeInJsonFormat, writeDateString));
   }
 
   function bindEvents() {
@@ -1543,8 +1495,7 @@
           Disabled: false,
           Format: '',
           IsGregorian: false,
-          GregorianStartDayIndex: 0,
-          InLine: false
+          GregorianStartDayIndex: 0
         }, options);
       $this.data(mdPluginName, settings);
       if (isFirstTime) {
@@ -1557,7 +1508,6 @@
         $this.attr('data-trigger', settings.Trigger);
         $this.attr('data-enabletimepicker', settings.EnableTimePicker);
         $this.attr('data-mdformat', settings.Format == '' ? getDefaultFormat(settings.EnableTimePicker == 'true') : settings.Format);
-        $this.attr('data-isline', settings.InLine.toString().toLowerCase());
         if (settings.TargetSelector.trim() != '')
           $this.attr('data-targetselector', settings.TargetSelector);
         if (settings.GroupId.trim() != '')
@@ -1578,37 +1528,31 @@
         }
         var initialDateTimeInJsonFormat;
         if (settings.IsGregorian) {
-          settings.EnglishNumber = true;
-          var selectedDateTime = parseGregorianDateTime(toEnglishNumber($this.val()));
+          var selectedDateTime = parseGregorianDateTime($this.val());
           initialDateTimeInJsonFormat = createDateTimeJson(selectedDateTime.getFullYear(), selectedDateTime.getMonth(), selectedDateTime.getDate(), selectedDateTime.getHours(), selectedDateTime.getMinutes(), selectedDateTime.getSeconds());
         } else {
           initialDateTimeInJsonFormat = parsePersianDateTime($this.val());
         }
-        var $calendarDivWrapper = settings.IsGregorian ?
-          createGregorianDateTimePickerHtml($this, initialDateTimeInJsonFormat, undefined, true) :
-          createPersianDateTimePickerHtml($this, initialDateTimeInJsonFormat, undefined, true);
+        var $calendarDivWrapper = settings.IsGregorian
+          ? createGregorianDateTimePickerHtml($this, initialDateTimeInJsonFormat, undefined, true)
+          : createPersianDateTimePickerHtml($this, initialDateTimeInJsonFormat, undefined, true);
         // نمایش تقویم
-        if (settings.InLine) {
-          $this.append($calendarDivWrapper);
-        } else {
-          $this.popover({
-            container: 'body',
-            content: $calendarDivWrapper,
-            html: true,
-            placement: settings.Placement,
-            title: 'انتخاب تاریخ',
-            trigger: 'manual',
-            template: '<div class="popover zIndexCorrected" role="tooltip"><div class="arrow"></div><h3 class="popover-title" data-name="md-datetimepicker-title" data-isgregorian="' + settings.IsGregorian + '"></h3><div class="popover-content" data-name="md-datetimepicker-popovercontent"></div></div>',
-          }).on(settings.Trigger, function () {
-            var isDisabled = $this.attr('data-disabled') != undefined && $this.attr('data-disabled').toLowerCase() == 'true',
-              isGregorian = $this.attr('data-isgregorian') != undefined && $this.attr('data-isgregorian').toLowerCase() == 'true';
-            if (isDisabled) return;
-            hideOthers($this);
-            showPopover($this);
-            updateDateTimePickerHtml(this, changeDateTimeEnum.TriggerFired, isGregorian);
-          });
-        }
-
+        $this.popover({
+          container: 'body',
+          content: $calendarDivWrapper,
+          html: true,
+          placement: settings.Placement,
+          title: 'انتخاب تاریخ',
+          trigger: 'manual',
+          template: '<div class="popover zIndexCorrected" role="tooltip"><div class="arrow"></div><h3 class="popover-title" data-name="md-datetimepicker-title" data-isgregorian="' + settings.IsGregorian + '"></h3><div class="popover-content" data-name="md-datetimepicker-popovercontent"></div></div>'
+        }).on(settings.Trigger, function () {
+          var isDisabled = $this.attr('data-disabled') != undefined && $this.attr('data-disabled').toLowerCase() == 'true',
+            isGregorian = $this.attr('data-isgregorian') != undefined && $this.attr('data-isgregorian').toLowerCase() == 'true';
+          if (isDisabled) return;
+          hideOthers($this);
+          showPopover($this);
+          updateDateTimePickerHtml(this, changeDateTimeEnum.TriggerFired, isGregorian);
+        });
       });
     },
     getDate: function () {
@@ -1649,7 +1593,7 @@
         var $this = $(this),
           settings = $this.data(mdPluginName),
           $target = $(settings.TargetSelector);
-        setTargetValue1($target, value, this);
+        setTargetValue1($target, value);
       });
     },
     hide: function () {
@@ -1686,7 +1630,7 @@
   // مخفی کردن تقویم با کلیک روی جایی که تقویم نیست
   $('html').on('click', function (e) {
     var $target = $(e.target),
-      $parentTarget1 = $target.parents(), // اگر المان کلیک شده دارای تارگت باشد
+      $parentTarget1 = $target.parents(),// اگر المان کلیک شده دارای تارگت باشد
       $parentTarget2 = $target.parents(mdDateTimePickerFlagSelector), // اگر روی تقویم کلیک شده باشد این متغیر مقدار میگیرد
       regex = new RegExp(mdDateTimePickerFlagAttributeName, 'im'),
       hasFlag = false;
@@ -1742,18 +1686,14 @@
         disable = $this.attr('data-disabled') != undefined && $this.attr('data-disabled').toLowerCase() == 'true',
         format = $this.attr('data-mdformat'),
         gregorianStartDayIndex = $this.attr('data-gregorianstartdayindex') == undefined ? 0 : Number($this.attr('data-gregorianstartdayindex')),
-        isGregorian = $this.attr('data-isgregorian') == 'true',
-        inLine = $this.attr('data-inline') == 'true';
+        isGregorian = $this.attr('data-isgregorian') == 'true';
       if (!isNumber(gregorianStartDayIndex)) gregorianStartDayIndex = 0;
-      if (!$this.is(':input') && $this.css('cursor') == 'auto') $this.css({
-        cursor: 'pointer'
-      });
-      if (inLine) trigger = 'manual';
-      if (trigger == undefined || trigger == '') trigger = 'click';
+      if (!$this.is(':input') && $this.css('cursor') == 'auto')
+        $this.css({ cursor: 'pointer' });
       var settings = {
         Placement: placement,
         EnglishNumber: englishNumber == 'true',
-        Trigger: trigger,
+        Trigger: trigger == undefined || trigger == '' ? 'click' : trigger,
         EnableTimePicker: enableTimePicker == 'true',
         TargetSelector: targetSelector != undefined ? targetSelector : '',
         GroupId: groupId != undefined ? groupId : '',
@@ -1763,8 +1703,7 @@
         Disabled: disable,
         Format: format == undefined || format == '' ? getDefaultFormat(enableTimePicker == 'true') : format,
         GregorianStartDayIndex: gregorianStartDayIndex,
-        IsGregorian: isGregorian,
-        InLine: inLine
+        IsGregorian: isGregorian
       };
       $this.MdPersianDateTimePicker(settings);
     });
