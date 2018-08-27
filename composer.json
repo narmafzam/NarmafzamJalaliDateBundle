@@ -19,5 +19,5 @@
       "Narmafzam\\JalaliDateBundle\\" : "src/"
     }
   },
-  "minimum-stability": "dev"
+  "minimum-stability": "stable"
 }
