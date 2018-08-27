@@ -15,8 +15,14 @@
     "ext-intl": "*"
   },
   "autoload" : {
+    "exclude-from-classmap": ["/Tests/"],
     "psr-4": {
-      "Narmafzam\\JalaliDateBundle\\" : "/"
+      "Narmafzam\\JalaliDateBundle\\" : ""
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Narmafzam\\JalaliDateBundle\\" : ""
     }
   }
 }
