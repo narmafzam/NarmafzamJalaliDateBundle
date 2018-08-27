@@ -16,8 +16,8 @@
   },
   "autoload" : {
     "psr-4": {
-      "Narmafzam\\JalaliDateBundle\\" : ""
+      "Narmafzam\\JalaliDateBundle\\" : "/"
     }
   },
-  "minimum-stability": "dev"
+  "minimum-stability": "stable"
 }
