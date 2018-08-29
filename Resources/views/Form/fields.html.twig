@@ -1,0 +1,39 @@
+{% block narmafzam_jalali_gregorian_date_widget -%}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control depart-date addon addon-depart fDatepicker DOM_Date start')|trim}) -%}
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 " id="DOM_depart">
+        <div class="form-group datepicker-wrapper startDate Dom-startDate">
+            <label for="DOM_DepartDate_Str" class="converted-date"></label>
+            <label for="DOM_DepartDate_Str" class="input-labels">تاریخ شروع:</label>
+            <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+            <div class="input-tooltip input-tooltip-warning -closed" id="DOM_DepartDateValidationMessage"><i class="icon ion-close close"></i></div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $(".DOM_Date").focus(function (e) {
+                Jalali = true;
+                FDatepicker(this, {
+                    single: $("input[name=DOM_TripMode]:checked").val() == 1,
+                    isJalali: true,
+                    firstMessage: "تاریخ شروع را انتخاب کنید",
+                    secondMessage: "تاریخ پایان را انتخاب کنید"
+                });
+            });
+            $(document).on("change", "input[name=DOM_TripMode]", function () {
+                changeDomTripMode();
+            });
+
+            function changeDomTripMode() {
+                if ($("input[name=DOM_TripMode]:checked").val() == 2) {
+                    $("#DOM_return").css("display", "block");
+                } else {
+                    $("#DOM_return").css("display", "none");
+                }
+            }
+
+            $(':radio[value="1"]', '#DomesticSearchFlight').attr("checked", "checked");
+            changeDomTripMode();
+        });
+    </script>
+{% endblock narmafzam_jalali_gregorian_date_widget -%}

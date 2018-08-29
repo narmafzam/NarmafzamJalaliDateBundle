@@ -35,7 +35,7 @@ class NarmafzamJalaliDateType extends AbstractType
     protected $locale;
 
     /**
-     * NarmafzamDateType constructor.
+     * NarmafzamJalaliDateType constructor.
      *
      * @param DateConverter $dateConverter
      * @param RequestStack $requestStack
@@ -75,6 +75,9 @@ class NarmafzamJalaliDateType extends AbstractType
             'serverFormat' => 'yyyy/MM/dd',
             'locale' => $this->locale,
             'pickerOptions' => [],
+            'parent_attr' => array(
+                'class'   => 'col-sm-6'
+            ),
         ));
 
         $resolver->setAllowedTypes('serverFormat', ['string', 'null']);

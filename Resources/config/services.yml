@@ -9,7 +9,7 @@ services:
         tags:
             - { name: twig.extension }
 
-    Narmafzam\JalaliDateBundle\Form\Type\NarmafzamDateType:
+    Narmafzam\JalaliDateBundle\Form\Type\NarmafzamJalaliDateType:
         arguments:
             - '@Narmafzam\JalaliDateBundle\Model\Converter\DateConverter'
             - '@request_stack'
