@@ -26,9 +26,6 @@ class NarmafzamJalaliGregorianDateType extends AbstractType
         $resolver->setDefaults(array(
             'parent_attr' => array(
                 'class'   => 'col-sm-6'
-            ),
-            'attr' => array(
-                'class' => 'datepicker'
             )
         ));
     }
