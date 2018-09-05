@@ -9,8 +9,11 @@
 namespace Narmafzam\JalaliDateBundle\Form\Type;
 
 use Narmafzam\JalaliDateBundle\Form\DataTransformer\NarmafzamDateTransformer;
+use Narmafzam\JalaliDateBundle\Model\Converter\DateConverter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -19,6 +22,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class NarmafzamJalaliGregorianDateType extends AbstractType
 {
+    /**
+     * @var DateConverter
+     */
+    private $dateConverter;
+
     /**
      * @var string
      */
@@ -30,8 +38,9 @@ class NarmafzamJalaliGregorianDateType extends AbstractType
      * @param DateConverter $dateConverter
      * @param RequestStack $requestStack
      */
-    public function __construct(RequestStack $requestStack)
+    public function __construct(DateConverter $dateConverter, RequestStack $requestStack)
     {
+        $this->dateConverter = $dateConverter;
         $this->locale = $requestStack->getCurrentRequest()->getLocale() == 'fa' ? 'fa' : 'en';
     }
 

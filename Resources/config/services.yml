@@ -18,6 +18,7 @@ services:
 
     Narmafzam\JalaliDateBundle\Form\Type\NarmafzamJalaliGregorianDateType:
         arguments:
+            - '@Narmafzam\JalaliDateBundle\Model\Converter\DateConverter'
             - '@request_stack'
         tags:
             - { name: form.type, alias: jSDate }
