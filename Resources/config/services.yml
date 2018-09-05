@@ -14,4 +14,10 @@ services:
             - '@Narmafzam\JalaliDateBundle\Model\Converter\DateConverter'
             - '@request_stack'
         tags:
+            - { name: form.type, alias: jSDateOld }
+
+    Narmafzam\JalaliDateBundle\Form\Type\NarmafzamJalaliGregorianDateType:
+        arguments:
+            - '@request_stack'
+        tags:
             - { name: form.type, alias: jSDate }
