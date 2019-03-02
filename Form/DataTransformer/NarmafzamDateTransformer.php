@@ -72,8 +72,10 @@ class NarmafzamDateTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param string $jDate
-     * @return \DateTime
+     * @param $jDate
+     * @return \DateTime|null
+     *
+     * @throws \Exception
      */
     public function reverseTransform($jDate)
     {
@@ -86,7 +88,7 @@ class NarmafzamDateTransformer implements DataTransformerInterface
         }
         if (self::isGeorgianDate($jDate)) {
 
-            $result = $this->dateConverter->georgianToPersian($jDate, $this->serverFormat, $this->locale, $this->calendar);
+            $result = new \DateTime($jDate);
         } else {
 
             $result = $this->dateConverter->persianToGeorgian($jDate, $this->serverFormat, $this->locale, $this->calendar);
