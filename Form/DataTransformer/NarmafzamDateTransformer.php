@@ -84,13 +84,36 @@ class NarmafzamDateTransformer implements DataTransformerInterface
         if (!is_string($jDate)) {
             throw new UnexpectedTypeException($jDate, 'string');
         }
+        if (self::isGeorgianDate($jDate)) {
 
-        $result = $this->dateConverter->persianToGeorgian($jDate, $this->serverFormat, $this->locale, $this->calendar);
+            $result = $this->dateConverter->georgianToPersian($jDate, $this->serverFormat, $this->locale, $this->calendar);
+        } else {
+
+            $result = $this->dateConverter->persianToGeorgian($jDate, $this->serverFormat, $this->locale, $this->calendar);
+        }
 
         if(!$result) {
             throw new TransformationFailedException(intl_get_error_message(), intl_get_error_code());
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $date
+     *
+     * @return bool
+     */
+    public static function isGeorgianDate(string $date): bool
+    {
+        if (!$date) {
+            return false;
+        }
+        try {
+            new \DateTime($date);
+            return true;
+        } catch (\Exception $exception) {
+            return false;
+        }
     }
 } 
