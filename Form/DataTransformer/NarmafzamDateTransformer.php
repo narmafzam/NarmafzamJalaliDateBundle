@@ -49,6 +49,22 @@ class NarmafzamDateTransformer implements DataTransformerInterface
     }
 
     /**
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCalendar()
+    {
+        return $this->calendar;
+    }
+
+    /**
      * @param \DateTime $gDate
      * @return string
      */
@@ -62,7 +78,7 @@ class NarmafzamDateTransformer implements DataTransformerInterface
             throw new UnexpectedTypeException($gDate, 'DateTime');
         }
 
-        $result = $this->dateConverter->georgianToPersian($gDate, $this->serverFormat, $this->locale, $this->calendar, false);
+        $result = $this->dateConverter->georgianToPersian($gDate, $this->serverFormat, $this->getLocale(), $this->getCalendar(), false);
 
         if(!$result) {
             throw new TransformationFailedException(intl_get_error_message(), intl_get_error_code());
@@ -91,7 +107,7 @@ class NarmafzamDateTransformer implements DataTransformerInterface
             $result = new \DateTime($jDate);
         } else {
 
-            $result = $this->dateConverter->persianToGeorgian($jDate, $this->serverFormat, $this->locale, $this->calendar);
+            $result = $this->dateConverter->persianToGeorgian($jDate, $this->serverFormat, $this->getLocale(), $this->getCalendar());
         }
 
         if(!$result) {

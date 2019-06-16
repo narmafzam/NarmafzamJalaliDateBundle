@@ -45,12 +45,21 @@ class NarmafzamJalaliGregorianDateType extends AbstractType
     }
 
     /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new NarmafzamDateTransformer($this->dateConverter, $options['serverFormat'], $options['locale']);
+        $locale = $options['locale'];
+        $transformer = new NarmafzamDateTransformer($this->dateConverter, $options['serverFormat'], !empty($locale) ? $locale : $this->getLocale());
         $builder->addModelTransformer($transformer);
     }
 
