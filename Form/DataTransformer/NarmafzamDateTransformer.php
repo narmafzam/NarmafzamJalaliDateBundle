@@ -107,7 +107,7 @@ class NarmafzamDateTransformer implements DataTransformerInterface
             $result = new \DateTime($jDate);
         } else {
 
-            $result = $this->dateConverter->persianToGeorgian($jDate, $this->serverFormat, $this->getLocale(), $this->getCalendar());
+            $result = $this->dateConverter->persianToGeorgian($jDate, $this->serverFormat, 'en', $this->getCalendar());
         }
 
         if(!$result) {
