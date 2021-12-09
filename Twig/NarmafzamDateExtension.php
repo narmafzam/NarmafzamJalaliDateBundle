@@ -9,12 +9,15 @@
 namespace Narmafzam\JalaliDateBundle\Twig;
 
 use Narmafzam\JalaliDateBundle\Model\Converter\DateConverter;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * Class NarmafzamDateExtension
  * @package Narmafzam\JalaliDateBundle\Twig
  */
-class NarmafzamDateExtension extends \Twig_Extension
+class NarmafzamDateExtension extends AbstractExtension
 {
     /**
      * @var DateConverter
@@ -32,14 +35,14 @@ class NarmafzamDateExtension extends \Twig_Extension
     }
 
     /**
-     * @return array|\Twig_Filter[]
+     * @return array|\TwigFilter[]
      */
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('gpDate', array($this, 'georgianToPersian')),
-            new \Twig_SimpleFilter('pgDate', array($this, 'persianToGeorgian')),
-            new \Twig_SimpleFilter('glDate', array($this, 'georgianToLocale')),
+            new TwigFilter('gpDate', array($this, 'georgianToPersian')),
+            new TwigFilter('pgDate', array($this, 'persianToGeorgian')),
+            new TwigFilter('glDate', array($this, 'georgianToLocale')),
         );
     }
 
